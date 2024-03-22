@@ -1,71 +1,111 @@
-# L'objet global en Node.js
+# Les modules en Node.js
 
-En Node.js, l'objet global est l'objet racine de l'environnement d'exécution. Il fournit des propriétés et des méthodes accessibles partout dans l'application Node.js sans nécessiter d'importation explicite.
+Les modules en Node.js permettent de diviser une application en plusieurs fichiers et fonctionnalités réutilisables. Node.js prend en charge deux systèmes de modules : CommonJS (utilisé par défaut) et ES6 (disponible dans les versions récentes de Node.js).
 
-## Différences avec l'objet global du navigateur
+## 1. Exportation/Importation de modules
 
-Dans un navigateur, l'objet global est `window`. Cependant, en Node.js, l'objet global est simplement appelé `global`. Voici quelques différences clés :
+### 1.1. CommonJS
 
-- `window` est spécifique au navigateur, tandis que `global` est spécifique à Node.js.
-- `window` fournit des propriétés et des méthodes liées au DOM et à l'interface utilisateur, tandis que `global` fournit des propriétés et des méthodes spécifiques à Node.js.
-- Dans le navigateur, les variables déclarées avec `var` deviennent des propriétés de `window`, tandis qu'en Node.js, elles ne deviennent pas automatiquement des propriétés de `global`.
+#### 1.1.1. Exportation en CommonJS
 
-## Propriétés et méthodes de l'objet global en Node.js
+##### a. Exportation nommée (CommonJS)
 
-Voici quelques propriétés et méthodes couramment utilisées de l'objet `global` en Node.js :
-
-- `global.console` : Fournit des méthodes pour afficher du texte dans la console, comme `console.log()`, `console.error()`, etc.
+Avec CommonJS, vous pouvez exporter des fonctionnalités spécifiques d'un module en les assignant à l'objet `module.exports`. Voici un exemple :
 
 ```javascript
-global.console.log('Hello, world!');
+// monModule.js
+function maFonction() {
+  console.log('Fonction appelée depuis le module');
+}
+
+const maVariable = 'Valeur de la variable';
+
+module.exports = {
+  maFonction,
+  maVariable
+};
 ```
 
-- `global.process` : Fournit des informations et un contrôle sur le processus Node.js en cours.
+##### b. Exportation par défaut (CommonJS)
+
+Vous pouvez également définir une exportation par défaut en assignant directement une valeur à `module.exports`. Voici un exemple :
 
 ```javascript
-console.log(global.process.version);
-console.log(global.process.platform);
+// monModule.js
+function maFonction() {
+  console.log('Fonction appelée depuis le module');
+}
+
+module.exports = maFonction;
 ```
 
-- `global.setTimeout()`, `global.setInterval()` et `global.setImmediate()` : Permettent de planifier l'exécution d'une fonction après un certain délai ou de manière répétée.
+#### 1.1.2. Importation de modules CommonJS
+
+Pour importer un module CommonJS, vous utilisez la fonction `require()`. Voici comment importer les modules exportés précédemment :
 
 ```javascript
-global.setTimeout(() => {
-  console.log('Delayed message');
-}, 1000);
+// app.js
+const monModule = require('./monModule');
+
+monModule.maFonction();
+console.log(monModule.maVariable);
 ```
+
+### 1.2. ES6
+
+#### 1.2.1. Exportation en ES6
+
+##### a. Exportation nommée (ES6)
+
+Avec les modules ES6, vous pouvez utiliser le mot-clé `export` pour exporter des fonctionnalités spécifiques. Voici un exemple :
 
 ```javascript
-let secondes=0;
-global.setInterval(() => {
-    console.log(++secondes);
-}, 1000);
+// monModule.js
+export function maFonction() {
+  console.log('Fonction appelée depuis le module');
+}
+
+export const maVariable = 'Valeur de la variable';
 ```
 
-- `global.__dirname` : Contient le chemin du répertoire du module en cours.
-- `global.__filename` : Contient le chemin du fichier du module en cours.
+##### b. Exportation par défaut (ES6)
+
+Vous pouvez également définir une exportation par défaut en utilisant `export default`. Voici un exemple :
 
 ```javascript
-console.log(__dirname);
-console.log(__filename);
+// monModule.js
+export default function maFonction() {
+  console.log('Fonction appelée depuis le module');
+}
 ```
 
-## Variables globales en Node.js
+#### 1.2.2. Importation de modules ES6
 
-En Node.js, les variables déclarées en dehors de toute fonction avec le mot-clé `var` ne deviennent pas automatiquement des propriétés de l'objet `global`. Elles sont limitées au module en cours.
+Avec les modules ES6, vous utilisez le mot-clé `import` pour importer des modules. Voici comment importer les modules exportés précédemment :
 
 ```javascript
-var myVariable = 'Hello';
-console.log(global.myVariable); // undefined
+// app.js
+import { maFonction, maVariable } from './monModule.js';
+
+maFonction();
+console.log(maVariable);
 ```
 
-Cependant, si vous assignez explicitement une variable à `global`, elle deviendra une propriété de `global`.
+Pour importer une exportation par défaut, vous pouvez utiliser n'importe quel nom :
 
 ```javascript
-global.myGlobalVariable = 'Hello, global!';
-console.log(global.myGlobalVariable); // 'Hello, global!'
+// app.js
+import maFonctionParDefaut from './monModule.js';
+
+maFonctionParDefaut();
 ```
 
-## Conclusion
+## 2. Utilisation des modules ES6 dans Node.js
 
-L'objet `global` en Node.js est l'objet racine qui fournit des propriétés et des méthodes accessibles dans toute l'application. Il diffère de l'objet `window` du navigateur en termes de fonctionnalités et de portée des variables. Comprendre l'objet `global` est essentiel pour travailler efficacement avec Node.js.
+Pour utiliser les modules ES6 dans Node.js, vous devez effectuer la manipulation suivante :
+1. Ouvrir le fichier `package.json`
+2. Ajouter une clé `type`, avec comme valeur `module`
+
+## 3. Conclusion
+
+Node.js prend en charge deux systèmes de modules : CommonJS et ES6. Les modules permettent de structurer le code en unités réutilisables et de gérer les dépendances. Vous pouvez utiliser les exportations nommées et les exportations par défaut pour exposer des fonctionnalités spécifiques d'un module. L'importation de modules se fait à l'aide de `require()` pour CommonJS et de `import` pour ES6.
