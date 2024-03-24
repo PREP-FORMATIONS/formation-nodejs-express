@@ -1,111 +1,111 @@
-# Les modules en Node.js
+# Les modules natifs de Node.js
 
-Les modules en Node.js permettent de diviser une application en plusieurs fichiers et fonctionnalités réutilisables. Node.js prend en charge deux systèmes de modules : CommonJS (utilisé par défaut) et ES6 (disponible dans les versions récentes de Node.js).
+Node.js fournit plusieurs modules natifs qui offrent des fonctionnalités essentielles pour interagir avec le système d'exploitation, manipuler des fichiers et des répertoires, et effectuer diverses tâches courantes. Voici quelques-uns des modules natifs les plus utilisés :
 
-## 1. Exportation/Importation de modules
+## 1. Module `os`
 
-### 1.1. CommonJS
-
-#### 1.1.1. Exportation en CommonJS
-
-##### a. Exportation nommée (CommonJS)
-
-Avec CommonJS, vous pouvez exporter des fonctionnalités spécifiques d'un module en les assignant à l'objet `module.exports`. Voici un exemple :
+Le module `os` fournit des fonctions utiles pour interagir avec le système d'exploitation. Voici quelques exemples :
 
 ```javascript
-// monModule.js
-function maFonction() {
-  console.log('Fonction appelée depuis le module');
-}
+const os = require('os');
 
-const maVariable = 'Valeur de la variable';
+// Obtenir le type de système d'exploitation
+console.log(os.type()); // 'Linux', 'Darwin', 'Windows_NT'
 
-module.exports = {
-  maFonction,
-  maVariable
-};
+// Obtenir le répertoire personnel de l'utilisateur
+console.log(os.homedir()); // '/home/user'
+
+// Obtenir la quantité totale de mémoire système en octets
+console.log(os.totalmem()); // 8589934592
+
+// Obtenir la quantité de mémoire libre en octets
+console.log(os.freemem()); // 2147483648
+
+// Obtenir le nombre de CPU
+console.log(os.cpus().length); // 4
 ```
 
-##### b. Exportation par défaut (CommonJS)
+## 2. Module `fs`
 
-Vous pouvez également définir une exportation par défaut en assignant directement une valeur à `module.exports`. Voici un exemple :
+Le module `fs` (File System) permet d'interagir avec le système de fichiers. Il offre des fonctions pour lire, écrire, créer et supprimer des fichiers et des répertoires. Voici quelques exemples :
 
 ```javascript
-// monModule.js
-function maFonction() {
-  console.log('Fonction appelée depuis le module');
-}
+const fs = require('node:fs/promises');
 
-module.exports = maFonction;
+// Lire un fichier de manière asynchrone
+fs.readFile('exemple.txt', 'utf8')
+    .then(data => {
+        console.log(data);
+    })
+    .catch(err => {
+        console.error(err);
+    });
+
+// Écrire dans un fichier de manière asynchrone
+const content = 'Contenu à écrire dans le fichier';
+fs.writeFile('exemple.txt', content)
+    .then(() => {
+        console.log('Fichier écrit avec succès');
+    })
+    .catch(err => {
+        console.error(err);
+    });
+
+// Vérifier si un fichier existe de manière asynchrone
+// Note: fs.promises n'a pas de méthode exists car la vérification d'existence est généralement antipattern.
+// Utilisez fs.access ou essayez de lire/écrire directement et gérez l'erreur.
+fs.access('exemple.txt')
+    .then(() => console.log(true))
+    .catch(() => console.log(false));
+
+// Créer un répertoire de manière asynchrone
+fs.mkdir('nouveau_repertoire')
+    .then(() => {
+        console.log('Répertoire créé avec succès');
+    })
+    .catch(err => {
+        console.error(err);
+    });
+
+// Supprimer un fichier de manière asynchrone
+fs.unlink('exemple.txt')
+    .then(() => {
+        console.log('Fichier supprimé avec succès');
+    })
+    .catch(err => {
+        console.error(err);
+    });
+
 ```
 
-#### 1.1.2. Importation de modules CommonJS
+## 3. Module `path`
 
-Pour importer un module CommonJS, vous utilisez la fonction `require()`. Voici comment importer les modules exportés précédemment :
+Le module `path` fournit des outils pour travailler avec les chemins de fichiers et de répertoires. Voici quelques exemples :
 
 ```javascript
-// app.js
-const monModule = require('./monModule');
+const path = require('path');
 
-monModule.maFonction();
-console.log(monModule.maVariable);
+// Joindre des segments de chemin
+const filePath = path.join('/repertoire', 'sous-repertoire', 'fichier.txt');
+console.log(filePath); // '/repertoire/sous-repertoire/fichier.txt'
+
+// Obtenir le répertoire d'un chemin
+const dirName = path.dirname('/repertoire/sous-repertoire/fichier.txt');
+console.log(dirName); // '/repertoire/sous-repertoire'
+
+// Obtenir le nom de fichier d'un chemin
+const fileName = path.basename('/repertoire/sous-repertoire/fichier.txt');
+console.log(fileName); // 'fichier.txt'
+
+// Obtenir l'extension d'un fichier
+const fileExt = path.extname('fichier.txt');
+console.log(fileExt); // '.txt'
+
+// Résoudre un chemin absolu
+const absolutePath = path.resolve('repertoire', 'fichier.txt');
+console.log(absolutePath); // '/chemin/absolu/repertoire/fichier.txt'
 ```
 
-### 1.2. ES6
+Ces exemples illustrent quelques-unes des fonctionnalités offertes par les modules natifs `os`, `fs` et `path`. Ces modules sont essentiels pour interagir avec le système d'exploitation, manipuler des fichiers et des répertoires, et travailler avec des chemins.
 
-#### 1.2.1. Exportation en ES6
-
-##### a. Exportation nommée (ES6)
-
-Avec les modules ES6, vous pouvez utiliser le mot-clé `export` pour exporter des fonctionnalités spécifiques. Voici un exemple :
-
-```javascript
-// monModule.js
-export function maFonction() {
-  console.log('Fonction appelée depuis le module');
-}
-
-export const maVariable = 'Valeur de la variable';
-```
-
-##### b. Exportation par défaut (ES6)
-
-Vous pouvez également définir une exportation par défaut en utilisant `export default`. Voici un exemple :
-
-```javascript
-// monModule.js
-export default function maFonction() {
-  console.log('Fonction appelée depuis le module');
-}
-```
-
-#### 1.2.2. Importation de modules ES6
-
-Avec les modules ES6, vous utilisez le mot-clé `import` pour importer des modules. Voici comment importer les modules exportés précédemment :
-
-```javascript
-// app.js
-import { maFonction, maVariable } from './monModule.js';
-
-maFonction();
-console.log(maVariable);
-```
-
-Pour importer une exportation par défaut, vous pouvez utiliser n'importe quel nom :
-
-```javascript
-// app.js
-import maFonctionParDefaut from './monModule.js';
-
-maFonctionParDefaut();
-```
-
-## 2. Utilisation des modules ES6 dans Node.js
-
-Pour utiliser les modules ES6 dans Node.js, vous devez effectuer la manipulation suivante :
-1. Ouvrir le fichier `package.json`
-2. Ajouter une clé `type`, avec comme valeur `module`
-
-## 3. Conclusion
-
-Node.js prend en charge deux systèmes de modules : CommonJS et ES6. Les modules permettent de structurer le code en unités réutilisables et de gérer les dépendances. Vous pouvez utiliser les exportations nommées et les exportations par défaut pour exposer des fonctionnalités spécifiques d'un module. L'importation de modules se fait à l'aide de `require()` pour CommonJS et de `import` pour ES6.
+N'hésitez pas à explorer la documentation officielle de Node.js pour en savoir plus sur ces modules et découvrir d'autres fonctionnalités qu'ils proposent.
