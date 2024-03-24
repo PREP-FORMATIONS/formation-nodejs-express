@@ -1,0 +1,23 @@
+@BASE_URL= http://localhost:3000/api
+
+### Retreives all tasks
+GET {{BASE_URL}}/tasks
+
+### Retreives a single task
+@taskId = 1
+GET {{BASE_URL}}/tasks/{{taskId}}
+
+### Delete a task
+DELETE {{BASE_URL}}/tasks/{{taskId}}
+
+
+
+### Retreives all users
+GET {{BASE_URL}}/users
+
+### Retreives a single user
+@userId = 1
+GET {{BASE_URL}}/users/{{userId}}
+
+### Delete a user
+DELETE {{BASE_URL}}/users/{{userId}}

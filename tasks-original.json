@@ -1,0 +1,222 @@
+[
+  {
+    "id": 1,
+    "title": "Conception de l'architecture",
+    "description": "Définir l'architecture globale du système",
+    "start_date": "2023-06-01 00:00:00.000000 +00:00",
+    "end_date": "2023-06-15 00:00:00.000000 +00:00",
+    "user_id": 1,
+    "parent_id": null,
+    "assignee_id": null,
+    "status": "todo"
+  },
+  {
+    "id": 2,
+    "title": "Développement de l'API REST",
+    "description": "Implémenter les points d'endpoint de l'API REST",
+    "start_date": "2023-06-16 00:00:00.000000 +00:00",
+    "end_date": "2023-07-15 00:00:00.000000 +00:00",
+    "user_id": 2,
+    "parent_id": null,
+    "assignee_id": null,
+    "status": "todo"
+  },
+  {
+    "id": 3,
+    "title": "Conception de la base de données",
+    "description": "Concevoir le schéma de la base de données",
+    "start_date": "2023-06-01 00:00:00.000000 +00:00",
+    "end_date": "2023-06-10 00:00:00.000000 +00:00",
+    "user_id": 3,
+    "parent_id": null,
+    "assignee_id": null,
+    "status": "in_progress"
+  },
+  {
+    "id": 4,
+    "title": "Implémentation du frontend",
+    "description": "Développer l'interface utilisateur",
+    "start_date": "2023-07-01 00:00:00.000000 +00:00",
+    "end_date": "2023-08-15 00:00:00.000000 +00:00",
+    "user_id": 4,
+    "parent_id": null,
+    "assignee_id": null,
+    "status": "todo"
+  },
+  {
+    "id": 5,
+    "title": "Rédaction de la documentation",
+    "description": "Documenter l'architecture et les fonctionnalités du système",
+    "start_date": "2023-08-16 00:00:00.000000 +00:00",
+    "end_date": "2023-09-01 00:00:00.000000 +00:00",
+    "user_id": 5,
+    "parent_id": null,
+    "assignee_id": null,
+    "status": "todo"
+  },
+  {
+    "id": 6,
+    "title": "Mise en place de l'infrastructure",
+    "description": "Configurer l'environnement de production",
+    "start_date": "2023-06-15 00:00:00.000000 +00:00",
+    "end_date": "2023-06-30 00:00:00.000000 +00:00",
+    "user_id": 1,
+    "parent_id": null,
+    "assignee_id": null,
+    "status": "todo"
+  },
+  {
+    "id": 7,
+    "title": "Intégration des services externes",
+    "description": "Intégrer les services tiers nécessaires",
+    "start_date": "2023-07-16 00:00:00.000000 +00:00",
+    "end_date": "2023-08-01 00:00:00.000000 +00:00",
+    "user_id": 2,
+    "parent_id": null,
+    "assignee_id": null,
+    "status": "todo"
+  },
+  {
+    "id": 8,
+    "title": "Tests unitaires",
+    "description": "Écrire et exécuter les tests unitaires",
+    "start_date": "2023-07-16 00:00:00.000000 +00:00",
+    "end_date": "2023-08-01 00:00:00.000000 +00:00",
+    "user_id": 3,
+    "parent_id": null,
+    "assignee_id": null,
+    "status": "todo"
+  },
+  {
+    "id": 9,
+    "title": "Déploiement continu",
+    "description": "Mettre en place le pipeline de déploiement continu",
+    "start_date": "2023-08-01 00:00:00.000000 +00:00",
+    "end_date": "2023-08-15 00:00:00.000000 +00:00",
+    "user_id": 4,
+    "parent_id": null,
+    "assignee_id": null,
+    "status": "todo"
+  },
+  {
+    "id": 10,
+    "title": "Optimisation des performances",
+    "description": "Analyser et optimiser les performances du système",
+    "start_date": "2023-08-16 00:00:00.000000 +00:00",
+    "end_date": "2023-09-01 00:00:00.000000 +00:00",
+    "user_id": 5,
+    "parent_id": null,
+    "assignee_id": null,
+    "status": "todo"
+  },
+  {
+    "id": 11,
+    "title": "Conception de l'expérience utilisateur",
+    "description": "Concevoir l'expérience utilisateur",
+    "start_date": "2023-06-15 00:00:00.000000 +00:00",
+    "end_date": "2023-06-30 00:00:00.000000 +00:00",
+    "user_id": 1,
+    "parent_id": null,
+    "assignee_id": null,
+    "status": "in_progress"
+  },
+  {
+    "id": 12,
+    "title": "Gestion des erreurs et logging",
+    "description": "Mettre en place la gestion des erreurs et la journalisation",
+    "start_date": "2023-08-01 00:00:00.000000 +00:00",
+    "end_date": "2023-08-15 00:00:00.000000 +00:00",
+    "user_id": 2,
+    "parent_id": null,
+    "assignee_id": null,
+    "status": "todo"
+  },
+  {
+    "id": 13,
+    "title": "Définir les modèles de données",
+    "description": "Identifier et définir les modèles de données nécessaires",
+    "start_date": "2023-06-01 00:00:00.000000 +00:00",
+    "end_date": "2023-06-05 00:00:00.000000 +00:00",
+    "user_id": 3,
+    "parent_id": 3,
+    "assignee_id": null,
+    "status": "in_progress"
+  },
+  {
+    "id": 14,
+    "title": "Créer les schémas de base de données",
+    "description": "Créer les schémas SQL pour la base de données",
+    "start_date": "2023-06-06 00:00:00.000000 +00:00",
+    "end_date": "2023-06-10 00:00:00.000000 +00:00",
+    "user_id": 3,
+    "parent_id": 3,
+    "assignee_id": null,
+    "status": "todo"
+  },
+  {
+    "id": 15,
+    "title": "Développer l'interface de connexion",
+    "description": "Implémenter la page de connexion utilisateur",
+    "start_date": "2023-07-01 00:00:00.000000 +00:00",
+    "end_date": "2023-07-15 00:00:00.000000 +00:00",
+    "user_id": 4,
+    "parent_id": 4,
+    "assignee_id": null,
+    "status": "todo"
+  },
+  {
+    "id": 16,
+    "title": "Développer le tableau de bord",
+    "description": "Implémenter le tableau de bord utilisateur",
+    "start_date": "2023-07-16 00:00:00.000000 +00:00",
+    "end_date": "2023-08-01 00:00:00.000000 +00:00",
+    "user_id": 4,
+    "parent_id": 4,
+    "assignee_id": null,
+    "status": "todo"
+  },
+  {
+    "id": 17,
+    "title": "Définir les personas utilisateurs",
+    "description": "Identifier et définir les personas utilisateurs",
+    "start_date": "2023-06-15 00:00:00.000000 +00:00",
+    "end_date": "2023-06-20 00:00:00.000000 +00:00",
+    "user_id": 1,
+    "parent_id": 11,
+    "assignee_id": null,
+    "status": "in_progress"
+  },
+  {
+    "id": 18,
+    "title": "Créer les wireframes",
+    "description": "Créer les wireframes pour les principales interfaces utilisateur",
+    "start_date": "2023-06-21 00:00:00.000000 +00:00",
+    "end_date": "2023-06-30 00:00:00.000000 +00:00",
+    "user_id": 1,
+    "parent_id": 11,
+    "assignee_id": null,
+    "status": "todo"
+  },
+  {
+    "id": 19,
+    "title": "Implémenter la gestion des exceptions",
+    "description": "Mettre en place la gestion des exceptions dans l'application",
+    "start_date": "2023-08-01 00:00:00.000000 +00:00",
+    "end_date": "2023-08-07 00:00:00.000000 +00:00",
+    "user_id": 2,
+    "parent_id": 12,
+    "assignee_id": null,
+    "status": "todo"
+  },
+  {
+    "id": 20,
+    "title": "Configurer la journalisation",
+    "description": "Configurer le système de journalisation des erreurs et des événements",
+    "start_date": "2023-08-08 00:00:00.000000 +00:00",
+    "end_date": "2023-08-15 00:00:00.000000 +00:00",
+    "user_id": 2,
+    "parent_id": 12,
+    "assignee_id": null,
+    "status": "todo"
+  }
+]
