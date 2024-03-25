@@ -46,7 +46,7 @@ Content-Type: application/json
 GET {{BASE_URL}}/users
 
 ### Retreives a single user
-@userId = 1
+@userId = 2
 GET {{BASE_URL}}/users/{{userId}}
 
 ### Delete a user
