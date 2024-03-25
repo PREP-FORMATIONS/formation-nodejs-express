@@ -1,58 +1,56 @@
-const taskRepository = require('./tasks.repository');
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
-const getAllTasks = async () => {
-    return await taskRepository.loadTasks();
+const getAllTasks =  () => {
+    return prisma.tasks.findMany();
 };
 
-const getTaskById = async (id) => {
-    const tasks = await taskRepository.loadTasks();
-    return tasks.find((task) => task.id === id);
-};
-
-const createTask = async (taskData) => {
-    const tasks = await taskRepository.loadTasks();
-    const newTask = { ...taskData, id: generateUniqueId(tasks) };
-    tasks.push(newTask);
-    await taskRepository.saveTasks(tasks);
-    return newTask;
-};
-
-const updateTask = async (id, taskData) => {
-    const tasks = await taskRepository.loadTasks();
-    const taskIndex = tasks.findIndex((task) => task.id === id);
-    if (taskIndex !== -1) {
-        tasks[taskIndex] = { ...tasks[taskIndex], ...taskData };
-        await taskRepository.saveTasks(tasks);
-        return tasks[taskIndex];
-    }
-    return null;
-};
-
-const deleteTask = async (id) => {
-    const tasks = await taskRepository.loadTasks();
-    const taskIndex = tasks.findIndex((task) => task.id === id);
-    if (taskIndex !== -1) {
-        tasks.splice(taskIndex, 1);
-        await taskRepository.saveTasks(tasks);
-        return true;
-    }
-    return false;
-};
-
-const generateUniqueId = (tasks) => {
-    const maxId = tasks.reduce((max, task) => (task.id > max ? task.id : max), 0);
-    return maxId + 1;
-};
-
-const updateTasksUserIdToNull = async (userId) => {
-    const tasks = await taskRepository.loadTasks();
-    const updatedTasks = tasks.map((task) => {
-        if (task.user_id === userId) {
-            return { ...task, user_id: null };
-        }
-        return task;
+const getTaskById = async (taskId) => {
+    const task = await prisma.tasks.findUnique({
+        where: { id: taskId },
     });
-    await taskRepository.saveTasks(updatedTasks);
+    if (!task) {
+        throw new Error('Task not found');
+    }
+    return task;
+};
+
+const createTask =  (taskData) => {
+    return prisma.tasks.create({
+        data: taskData,
+    });
+};
+
+const updateTask = async (taskId, taskData) => {
+    const task = await prisma.tasks.findUnique({
+        where: { id: taskId },
+    });
+    if (!task) {
+        throw new Error('Task not found');
+    }
+    return prisma.tasks.update({
+        where: { id: taskId },
+        data: taskData,
+    });
+};
+
+const deleteTask = async (taskId) => {
+    const task = await prisma.tasks.findUnique({
+        where: { id: taskId },
+    });
+    if (!task) {
+        throw new Error('Task not found');
+    }
+    return prisma.tasks.delete({
+        where: { id: taskId },
+    });
+};
+
+const updateTasksUserIdToNull =  (userId) => {
+    return prisma.tasks.updateMany({
+        where: { user_id: userId },
+        data: { user_id: null },
+    });
 };
 
 module.exports = {
@@ -61,5 +59,5 @@ module.exports = {
     createTask,
     updateTask,
     deleteTask,
-    updateTasksUserIdToNull
+    updateTasksUserIdToNull,
 };
