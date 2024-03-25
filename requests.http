@@ -10,6 +10,36 @@ GET {{BASE_URL}}/tasks/{{taskId}}
 ### Delete a task
 DELETE {{BASE_URL}}/tasks/{{taskId}}
 
+### Create a task
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Nouvelle tâche",
+  "description": "Description de la nouvelle tâche",
+  "start_date": "2023-06-01",
+  "end_date": "2023-06-30",
+  "user_id": 1,
+  "parent_id": null,
+  "assignee_id": 2,
+  "status": "todo"
+}
+
+### Update a task
+PUT http://localhost:3000/api/tasks/21
+Content-Type: application/json
+
+{
+  "title": "Tâche mise à jour",
+  "description": "Description mise à jour de la tâche",
+  "start_date": "2023-06-15",
+  "end_date": "2023-07-15",
+  "user_id": 1,
+  "parent_id": null,
+  "assignee_id": 3,
+  "status": "in_progress"
+}
+
 
 
 ### Retreives all users
@@ -21,3 +51,23 @@ GET {{BASE_URL}}/users/{{userId}}
 
 ### Delete a user
 DELETE {{BASE_URL}}/users/{{userId}}
+
+### Create user
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "first_name": "John",
+  "last_name": "Doe",
+  "email": "john.doe@example.com"
+}
+
+### Update user
+PUT http://localhost:3000/api/users/6
+Content-Type: application/json
+
+{
+  "first_name": "John",
+  "last_name": "Wick Nicolas Cage",
+  "email": "john.wick@example.com"
+}
