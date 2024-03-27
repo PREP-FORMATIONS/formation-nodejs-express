@@ -1,76 +1,65 @@
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
-const taskService = require('../tasks/tasks.service')
+const NotFoundError = require('../errors/not-found.error')
 
-const getAllUsers = () => {
-  return prisma.users.findMany()
-}
-
-const getUserById = async (userId) => {
-  const user = await prisma.users.findUnique({
-    where: { id: userId }
-  })
-  if (!user) {
-    throw new Error('User not found')
-  }
-  return user
-}
-
-const createUser = (userData) => {
-  return prisma.users.create({
-    data: userData
-  })
-}
-
-const updateUser = async (userId, userData) => {
-  const user = await prisma.users.findUnique({
-    where: { id: userId }
-  })
-  if (!user) {
-    throw new Error('User not found')
-  }
-  return prisma.users.update({
-    where: { id: userId },
-    data: { ...userData, updated_at: new Date() }
-  })
-}
-
-const deleteUserWithoutTransaction = async (userId) => {
-  const user = await prisma.users.findUnique({
-    where: { id: userId }
-  })
-  if (!user) {
-    throw new Error('User not found')
-  }
-  await prisma.users.delete({
-    where: { id: userId }
-  })
-  await taskService.updateTasksUserIdToNull(userId)
-  return true
-}
-
-const deleteUser = async (userId) => {
-  const user = await prisma.users.findUnique({
-    where: { id: userId }
-  })
-  if (!user) {
-    throw new Error('User not found')
+class UserService {
+  constructor(prisma) {
+    this.prisma = prisma
   }
 
-  // await prisma.$transaction(async (prisma) => {
-  await prisma.users.delete({
-    where: { id: userId }
-  })
-  //   await taskService.updateTasksUserIdToNull(userId)
-  // })
+  getAllUsers = async () => {
+    return this.prisma.users.findMany()
+  }
 
-  return true
+  getUserById = async (userId) => {
+    const user = await this.prisma.users.findUnique({
+      where: { id: userId }
+    })
+    if (!user) {
+      throw new NotFoundError('User not found')
+    }
+    return user
+  }
+
+  createUser = async (userData) => {
+    return this.prisma.users.create({
+      data: userData
+    })
+  }
+
+  updateUser = async (userId, userData) => {
+    const user = await this.prisma.users.findUnique({
+      where: { id: userId }
+    })
+    if (!user) {
+      throw new NotFoundError('User not found')
+    }
+    return this.prisma.users.update({
+      where: { id: userId },
+      data: { ...userData, updated_at: new Date() }
+    })
+  }
+
+  deleteUser = async (userId) => {
+    const user = await this.prisma.users.findUnique({
+      where: { id: userId }
+    })
+    if (!user) {
+      throw new NotFoundError('User not found')
+    }
+
+    await this.prisma.$transaction(async (prisma) => {
+      await prisma.users.delete({
+        where: { id: userId }
+      })
+      await prisma.tasks.updateMany({
+        where: { user_id: userId },
+        data: { user_id: null }
+      })
+    })
+
+    return true
+  }
 }
 
 module.exports = {
-  getAllUsers,
-  getUserById,
-  createUser,
-  updateUser,
-  deleteUser
+  UserService
 }

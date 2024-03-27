@@ -1,77 +1,48 @@
-const taskService = require('./tasks.service')
+const NotFoundError = require('../errors/not-found.error')
+class TaskController {
+  constructor(taskService) {
+    this.taskService = taskService
+    // Avec cette approche, pas besoin du arrow function
+    // this.getAllTasks = this.getAllTasks.bind(this);
+    // this.getTaskById = this.getTaskById.bind(this);
+    // this.createTask = this.createTask.bind(this);
+    // this.updateTask = this.updateTask.bind(this);
+    // this.deleteTask = this.deleteTask.bind(this);
+  }
 
-const getAllTasks = async (req, res, next) => {
-  try {
-    const tasks = await taskService.getAllTasks()
+  getAllTasks = async (req, res, next) => {
+    const tasks = await this.taskService.getAllTasks()
     res.json(tasks)
-  } catch (error) {
-    next(error)
   }
-}
 
-const getTaskById = async (req, res, next) => {
-  try {
-    const taskId = parseInt(req.params.id)
-    const task = await taskService.getTaskById(taskId)
-    res.json(task)
-  } catch (error) {
-    if (error.message === 'Task not found') {
-      res.status(404).json({ error: error.message })
-    } else {
-      next(error)
-    }
+  getTaskById = async (req, res) => {
+    // try {
+      const taskId = parseInt(req.params.id)
+      const task = await this.taskService.getTaskById(taskId)
+      res.json(task)
+    // }catch (error){
+    //   next(error)
+    // }
   }
-}
 
-const createTask = async (req, res, next) => {
-  try {
+  createTask = async (req, res, next) => {
     const taskData = req.body
-    const newTask = await taskService.createTask(taskData)
+    const newTask = await this.taskService.createTask(taskData)
     res.status(201).json(newTask)
-  } catch (error) {
-    if (error.message === 'Failed to create task') {
-      res.status(400).json({ error: error.message })
-    } else {
-      next(error)
-    }
   }
-}
 
-const updateTask = async (req, res, next) => {
-  try {
+  updateTask = async (req, res, next) => {
     const taskId = parseInt(req.params.id)
     const taskData = req.body
-    const updatedTask = await taskService.updateTask(taskId, taskData)
+    const updatedTask = await this.taskService.updateTask(taskId, taskData)
     res.json(updatedTask)
-  } catch (error) {
-    // Failed to update task
-    if (error.message === 'Task not found') {
-      res.status(404).json({ error: 'Failed to create task' })
-    } else {
-      next(error)
-    }
   }
-}
 
-const deleteTask = async (req, res, next) => {
-  try {
+  deleteTask = async (req, res, next) => {
     const taskId = parseInt(req.params.id)
-    const deleted = await taskService.deleteTask(taskId)
-
+    await this.taskService.deleteTask(taskId)
     res.sendStatus(204)
-  } catch (error) {
-    // Failed to update task
-    if (error.message === 'Task not found') {
-      res.status(404).json({ error: error.message })
-    } else {
-      next(error)
-    }
   }
 }
-module.exports = {
-  getAllTasks,
-  getTaskById,
-  createTask,
-  updateTask,
-  deleteTask
-}
+
+module.exports = TaskController

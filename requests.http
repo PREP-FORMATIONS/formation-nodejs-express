@@ -4,7 +4,7 @@
 GET {{BASE_URL}}/tasks
 
 ### Retreives a single task
-@taskId = 22
+@taskId = 26
 GET {{BASE_URL}}/tasks/{{taskId}}
 
 ### Delete a task
@@ -15,7 +15,6 @@ POST http://localhost:3000/api/tasks
 Content-Type: application/json
 
 {
-  "title": "Nouvelle tâche",
   "description": "Description de la nouvelle tâche",
   "start_date": "2023-06-01T00:00:00.000Z",
   "end_date": "2023-06-30T00:00:00.000Z",
@@ -26,7 +25,7 @@ Content-Type: application/json
 }
 
 ### Update a task
-PATCH http://localhost:3000/api/tasks/22
+PATCH http://localhost:3000/api/tasks/21
 Content-Type: application/json
 
 {
@@ -46,7 +45,7 @@ Content-Type: application/json
 GET {{BASE_URL}}/users
 
 ### Retreives a single user
-@userId = 2
+@userId = 54
 GET {{BASE_URL}}/users/{{userId}}
 
 ### Delete a user

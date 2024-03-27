@@ -17,8 +17,8 @@ async function main() {
     await prisma.tasks.create({ data: task })
   }
 
-  await prisma.$executeRaw`SELECT setval('tasks_id_seq', (SELECT COALESCE(MAX(id), 0) + 1 FROM tasks), false);`;
-  await prisma.$executeRaw`SELECT setval('users_id_seq', (SELECT COALESCE(MAX(id), 0) + 1 FROM users), false);`;
+  await prisma.$executeRaw`SELECT setval('tasks_id_seq', (SELECT COALESCE(MAX(id), 0) + 1 FROM tasks), false);`
+  await prisma.$executeRaw`SELECT setval('users_id_seq', (SELECT COALESCE(MAX(id), 0) + 1 FROM users), false);`
   console.log('Seeding completed.')
 }
 

@@ -1,63 +1,56 @@
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
+const NotFoundError = require('../errors/not-found.error')
 
-const getAllTasks = () => {
-  return prisma.tasks.findMany()
-}
-
-const getTaskById = async (taskId) => {
-  const task = await prisma.tasks.findUnique({
-    where: { id: taskId }
-  })
-  if (!task) {
-    throw new Error('Task not found')
+class TaskService {
+  constructor(prisma) {
+    this.prisma = prisma
   }
-  return task
-}
 
-const createTask = (taskData) => {
-  return prisma.tasks.create({
-    data: taskData
-  })
-}
-
-const updateTask = async (taskId, taskData) => {
-  const task = await prisma.tasks.findUnique({
-    where: { id: taskId }
-  })
-  if (!task) {
-    throw new Error('Task not found')
+  getAllTasks = async () => {
+    return this.prisma.tasks.findMany()
   }
-  return prisma.tasks.update({
-    where: { id: taskId },
-    data: taskData
-  })
-}
 
-const deleteTask = async (taskId) => {
-  const task = await prisma.tasks.findUnique({
-    where: { id: taskId }
-  })
-  if (!task) {
-    throw new Error('Task not found')
+  getTaskById = async (taskId) => {
+    const task = await this.prisma.tasks.findUnique({
+      where: { id: taskId }
+    })
+    if (!task) {
+      throw new NotFoundError('Task not found')
+    }
+    return task
   }
-  return prisma.tasks.delete({
-    where: { id: taskId }
-  })
-}
 
-// const updateTasksUserIdToNull = (userId) => {
-//   return prisma.tasks.updateMany({
-//     where: { user_id: userId },
-//     data: { user_id: null }
-//   })
-// }
+  createTask = async (taskData) => {
+    return this.prisma.tasks.create({
+      data: taskData
+    })
+  }
+
+  updateTask = async (taskId, taskData) => {
+    const task = await this.prisma.tasks.findUnique({
+      where: { id: taskId }
+    })
+    if (!task) {
+      throw new NotFoundError('Task not found')
+    }
+    return this.prisma.tasks.update({
+      where: { id: taskId },
+      data: taskData
+    })
+  }
+
+  deleteTask = async (taskId) => {
+    const task = await this.prisma.tasks.findUnique({
+      where: { id: taskId }
+    })
+    if (!task) {
+      throw new NotFoundError('Task not found')
+    }
+    return this.prisma.tasks.delete({
+      where: { id: taskId }
+    })
+  }
+}
 
 module.exports = {
-  getAllTasks,
-  getTaskById,
-  createTask,
-  updateTask,
-  deleteTask
-  // updateTasksUserIdToNull
+  TaskService
 }

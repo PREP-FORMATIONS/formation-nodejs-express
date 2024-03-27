@@ -1,71 +1,39 @@
-const userService = require('./users.service')
+const NotFoundError = require('../errors/not-found.error')
 
-const getAllUsers = async (req, res, next) => {
-  try {
-    const users = await userService.getAllUsers()
+class UserController {
+  constructor(userService) {
+    this.userService = userService
+  }
+
+  getAllUsers = async (req, res, next) => {
+    const users = await this.userService.getAllUsers()
     res.json(users)
-  } catch (error) {
-    next(error)
   }
-}
 
-const getUserById = async (req, res, next) => {
-  try {
+  getUserById = async (req, res, next) => {
     const userId = parseInt(req.params.id)
-    const user = await userService.getUserById(userId)
+    const user = await this.userService.getUserById(userId)
     res.json(user)
-  } catch (error) {
-    if (error.message === 'User not found') {
-      res.status(404).json({ error: error.message })
-    } else {
-      next()
-    }
   }
-}
 
-const createUser = async (req, res, next) => {
-  try {
+  createUser = async (req, res, next) => {
     const userData = req.body
-    const newUser = await userService.createUser(userData)
+    const newUser = await this.userService.createUser(userData)
     res.status(201).json(newUser)
-  } catch (error) {
-    next(error)
   }
-}
 
-const updateUser = async (req, res, next) => {
-  try {
+  updateUser = async (req, res, next) => {
     const userId = parseInt(req.params.id)
     const userData = req.body
-    const updatedUser = await userService.updateUser(userId, userData)
+    const updatedUser = await this.userService.updateUser(userId, userData)
     res.json(updatedUser)
-  } catch (error) {
-    if (error.message === 'User not found') {
-      res.status(404).json({ error: error.message })
-    } else {
-      next(error)
-    }
   }
-}
 
-const deleteUser = async (req, res, next) => {
-  try {
+  deleteUser = async (req, res, next) => {
     const userId = parseInt(req.params.id)
-    const deleted = await userService.deleteUser(userId)
+    await this.userService.deleteUser(userId)
     res.sendStatus(204)
-  } catch (error) {
-    if (error.message === 'User not found') {
-      res.status(404).json({ error: error.message })
-    } else {
-      next(error)
-    }
   }
 }
 
-module.exports = {
-  getAllUsers,
-  getUserById,
-  createUser,
-  updateUser,
-  deleteUser
-}
+module.exports = UserController
