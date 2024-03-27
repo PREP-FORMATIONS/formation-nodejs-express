@@ -4,7 +4,7 @@
 GET {{BASE_URL}}/tasks
 
 ### Retreives a single task
-@taskId = 1
+@taskId = 22
 GET {{BASE_URL}}/tasks/{{taskId}}
 
 ### Delete a task
@@ -17,8 +17,8 @@ Content-Type: application/json
 {
   "title": "Nouvelle tâche",
   "description": "Description de la nouvelle tâche",
-  "start_date": "2023-06-01",
-  "end_date": "2023-06-30",
+  "start_date": "2023-06-01T00:00:00.000Z",
+  "end_date": "2023-06-30T00:00:00.000Z",
   "user_id": 1,
   "parent_id": null,
   "assignee_id": 2,
@@ -26,14 +26,14 @@ Content-Type: application/json
 }
 
 ### Update a task
-PUT http://localhost:3000/api/tasks/21
+PATCH http://localhost:3000/api/tasks/22
 Content-Type: application/json
 
 {
-  "title": "Tâche mise à jour",
+  "title": "Tâche mise à jour 2",
   "description": "Description mise à jour de la tâche",
-  "start_date": "2023-06-15",
-  "end_date": "2023-07-15",
+  "start_date": "2023-06-01T00:00:00.000Z",
+  "end_date": "2023-06-30T00:00:00.000Z",
   "user_id": 1,
   "parent_id": null,
   "assignee_id": 3,
@@ -63,7 +63,7 @@ Content-Type: application/json
 }
 
 ### Update user
-PUT http://localhost:3000/api/users/6
+PATCH http://localhost:3000/api/users/6
 Content-Type: application/json
 
 {

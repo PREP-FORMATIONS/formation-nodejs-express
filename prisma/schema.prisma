@@ -13,14 +13,14 @@ model tasks {
   description                    String?
   start_date                     DateTime?   @db.Timestamptz(6)
   end_date                       DateTime?   @db.Timestamptz(6)
-  user_id                        Int
+  user_id                        Int?
   parent_id                      Int?
   assignee_id                    Int?
   status                         task_status @default(todo)
   tasks                          tasks?      @relation("tasksTotasks", fields: [parent_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tasks_tasks_id_fk")
   other_tasks                    tasks[]     @relation("tasksTotasks")
-  users_tasks_user_idTousers     users       @relation("tasks_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tasks_users_id_fk")
-  users_tasks_assignee_idTousers users?      @relation("tasks_assignee_idTousers", fields: [assignee_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tasks_users_id_fk_2")
+  users_tasks_user_idTousers     users?      @relation("tasks_user_idTousers", fields: [user_id], references: [id], onDelete: SetNull, onUpdate: Cascade, map: "tasks_users_id_fk")
+  users_tasks_assignee_idTousers users?      @relation("tasks_assignee_idTousers", fields: [assignee_id], references: [id], onDelete: SetNull, onUpdate: Cascade, map: "tasks_users_id_fk_2")
 
   @@index([assignee_id], map: "tasks_assignee_id_index")
   @@index([status], map: "tasks_status_index")
