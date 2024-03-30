@@ -1,3 +1,5 @@
+"use strict"
+
 const NotFoundError = require('../errors/not-found.error')
 
 class UserController {
@@ -11,7 +13,7 @@ class UserController {
   }
 
   getUserById = async (req, res, next) => {
-    const userId = parseInt(req.params.id)
+    const userId = Number.parseInt(req.params.id)
     const user = await this.userService.getUserById(userId)
     res.json(user)
   }
@@ -23,14 +25,14 @@ class UserController {
   }
 
   updateUser = async (req, res, next) => {
-    const userId = parseInt(req.params.id)
+    const userId = Number.parseInt(req.params.id)
     const userData = req.body
     const updatedUser = await this.userService.updateUser(userId, userData)
     res.json(updatedUser)
   }
 
   deleteUser = async (req, res, next) => {
-    const userId = parseInt(req.params.id)
+    const userId = Number.parseInt(req.params.id)
     await this.userService.deleteUser(userId)
     res.sendStatus(204)
   }

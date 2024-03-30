@@ -1,3 +1,5 @@
+"use strict"
+
 const express = require('express')
 const createUserSchema = require('./schemas/create-user.schema')
 const validateRequest = require('../middlewares/validation.middleware')
@@ -17,7 +19,11 @@ const router = express.Router()
 
 router.get('/', errorWrapper(userController.getAllUsers))
 router.get('/:id', errorWrapper(userController.getUserById))
-router.post('/', validateRequest(createUserSchema), errorWrapper(userController.createUser))
+router.post(
+  '/',
+  validateRequest(createUserSchema),
+  errorWrapper(userController.createUser)
+)
 router.patch(
   '/:id',
   validateRequest(updateUserSchema),

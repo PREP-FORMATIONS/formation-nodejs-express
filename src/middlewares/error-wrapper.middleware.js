@@ -1,9 +1,10 @@
-const errorWrapper=(fn) => async (req, res, next) => {
+"use strict"
+const errorWrapper = (fn) => async (req, res, next) => {
   try {
-    await fn(req, res, next);
+    await fn(req, res, next)
   } catch (error) {
-    next(error);
+    next(error)
   }
-};
+}
 
-module.exports=errorWrapper
+module.exports = errorWrapper

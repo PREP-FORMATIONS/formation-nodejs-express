@@ -1,4 +1,3 @@
-// prismaErrorHandler.js
 const { Prisma } = require('@prisma/client')
 
 // Ici, il y aura des logs internes et ce qu'on envoie aux utilisateurs finaux

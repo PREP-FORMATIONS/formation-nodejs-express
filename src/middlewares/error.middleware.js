@@ -1,3 +1,5 @@
+"use strict"
+
 const NotFoundError = require('../errors/not-found.error')
 
 const errorHandler = (err, req, res, next) => {

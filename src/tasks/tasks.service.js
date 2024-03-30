@@ -1,3 +1,5 @@
+"use strict"
+
 const NotFoundError = require('../errors/not-found.error')
 
 class TaskService {

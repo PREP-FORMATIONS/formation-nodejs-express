@@ -4,8 +4,10 @@
   "description": "",
   "main": "src/app.js",
   "scripts": {
-    "start": "nodemon",
-    "format": "npx prettier . --write",
+    "start:dev": "nodemon",
+    "start:prod": "node src/app.js",
+    "format:prettier": "npx prettier . --write",
+    "check": "npx @biomejs/biome check --apply .",
     "seed:json": "node reset-db-json.js && npm run format",
     "seed:db": "node reset-db-seed.js"
   },
@@ -18,6 +20,7 @@
     "nodemon": "^3.1.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.6.3",
     "prettier": "3.2.5",
     "prisma": "^5.11.0"
   }

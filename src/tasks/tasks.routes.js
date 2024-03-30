@@ -1,3 +1,5 @@
+"use strict"
+
 const express = require('express')
 const validateRequest = require('../middlewares/validation.middleware')
 const createTaskSchema = require('./schemas/create-task.schema')
@@ -17,7 +19,11 @@ const router = express.Router()
 
 router.get('/', errorWrapper(taskController.getAllTasks))
 router.get('/:id', errorWrapper(taskController.getTaskById))
-router.post('/', validateRequest(createTaskSchema), errorWrapper(taskController.createTask))
+router.post(
+  '/',
+  validateRequest(createTaskSchema),
+  errorWrapper(taskController.createTask)
+)
 router.patch(
   '/:id',
   validateRequest(updateTaskSchema),
