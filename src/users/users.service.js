@@ -1,6 +1,7 @@
-"use strict"
+'use strict'
 
 const NotFoundError = require('../errors/not-found.error')
+const ConflictError = require('../errors/conflict.error')
 
 class UserService {
   constructor(prisma) {
@@ -22,6 +23,10 @@ class UserService {
   }
 
   createUser = async (userData) => {
+    const user=await this.prisma.users.findUnique({where:{email:userData.email}})
+    if(user){
+      throw new ConflictError(`User with email ${userData.email} already exists.`)
+    }
     return this.prisma.users.create({
       data: userData
     })

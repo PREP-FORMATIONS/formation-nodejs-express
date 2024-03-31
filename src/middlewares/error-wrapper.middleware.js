@@ -1,4 +1,4 @@
-"use strict"
+'use strict'
 const errorWrapper = (fn) => async (req, res, next) => {
   try {
     await fn(req, res, next)
