@@ -5,17 +5,21 @@
   "main": "src/server.js",
   "scripts": {
     "start:dev": "nodemon",
-    "start:prod": "node src/server.js",
+    "start:prod": "cross-env NODE_ENV=prod node src/server.js",
     "format:prettier": "npx prettier . --write",
     "check": "npx @biomejs/biome check --apply .",
     "seed:json": "node reset-db-json.js && npm run format",
-    "seed:db": "node reset-db-seed.js"
+    "seed:db": "dotenv -e .env node reset-db-seed.js",
+    "test": "dotenv -e .env.test jest -- --runInBand",
+    "migrate:test": "dotenv -e .env.test npx prisma migrate dev"
   },
   "private": true,
   "dependencies": {
     "@prisma/client": "^5.11.0",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
+    "dotenv-cli": "^7.4.1",
     "express": "^4.19.1",
     "express-rate-limit": "^7.2.0",
     "joi": "^17.12.2",
@@ -30,5 +34,8 @@
     "prettier": "3.2.5",
     "prisma": "^5.11.0",
     "supertest": "^6.3.4"
+  },
+  "volta": {
+    "node": "20.12.0"
   }
 }

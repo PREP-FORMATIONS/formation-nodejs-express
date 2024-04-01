@@ -23,9 +23,13 @@ class UserService {
   }
 
   createUser = async (userData) => {
-    const user=await this.prisma.users.findUnique({where:{email:userData.email}})
-    if(user){
-      throw new ConflictError(`User with email ${userData.email} already exists.`)
+    const user = await this.prisma.users.findUnique({
+      where: { email: userData.email }
+    })
+    if (user) {
+      throw new ConflictError(
+        `User with email ${userData.email} already exists.`
+      )
     }
     return this.prisma.users.create({
       data: userData

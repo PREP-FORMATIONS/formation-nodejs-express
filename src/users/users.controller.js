@@ -28,7 +28,7 @@ class UserController {
     const userId = Number.parseInt(req.params.id)
     const userData = req.body
     const updatedUser = await this.userService.updateUser(userId, userData)
-    res.json(updatedUser)
+    res.status(200).json(updatedUser)
   }
 
   deleteUser = async (req, res, next) => {

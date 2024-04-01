@@ -7,7 +7,7 @@ const ConflictError = require('../errors/conflict.error')
 const errorHandler = (err, req, res, next) => {
   // logger.log(err.stack)
   if (err instanceof NotFoundError) {
-    res.status(404).json({ error: err.message })
+    res.status(err.statusCode).json({ error: err.message })
   } else if (err instanceof BadRequestError) {
     return res.status(err.statusCode).json({ error: err.message })
   } else if (err instanceof ConflictError) {
